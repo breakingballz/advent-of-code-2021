@@ -44,12 +44,10 @@ def run2(path: str) -> int:
     return horiz * depth
 
 
-def run() -> None:
-    path = "./data.txt"
-
+def run(path: str) -> None:
     print(f"Result 1: {run1(path)}")
     print(f"Result 2: {run2(path)}")
 
 
 if __name__ == '__main__':
-    run()
+    run("./data.txt")

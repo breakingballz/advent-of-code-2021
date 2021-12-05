@@ -72,12 +72,12 @@ def run1(nums: NUMS) -> int:
     return binary_to_base_10(gamma) * binary_to_base_10(epsilon)
 
 
-def run() -> None:
-    nums = process_file("./data.txt")
+def run(path: str) -> None:
+    nums = process_file(path)
 
     print(f"Result 1: {run1(nums)}")
     print(f"Result 2: {run2(nums)}")
 
 
 if __name__ == '__main__':
-    run()
+    run("./data.txt")

@@ -23,12 +23,12 @@ def run2(nums: NUMS) -> int:
     )
 
 
-def run() -> None:
-    nums = get_numbers("./data.txt")
+def run(path: str) -> None:
+    nums = get_numbers(path)
 
     print(f"Result 1: {run1(nums)}")
     print(f"Result 2: {run2(nums)}")
 
 
 if __name__ == "__main__":
-    run()
+    run("./data.txt")
