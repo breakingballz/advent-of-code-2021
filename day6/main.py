@@ -1,41 +1,4 @@
-class Lanternfish:
-    spawn_timer: int
-    children: list["Lanternfish"]
-    first_cycle: bool
-
-    def __init__(self, spawn_timer: int = 8) -> None:
-        self.spawn_timer = spawn_timer
-        self.children = []
-        self.first_cycle = spawn_timer == 8
-
-    def tick(self) -> None:
-        self.spawn_timer -= 1
-        self.spawn_timer = 6 if self.spawn_timer == -1 else self.spawn_timer
-
-        if self.spawn_timer == 0:
-            self.first_cycle = False
-
-        if self.first_cycle:
-            return
-
-        for child in self.children:
-            child.tick()
-
-        if self.spawn_timer == 6:
-            self.children.append(Lanternfish())
-
-    def __repr__(self) -> str:
-        return (
-            f"Lanternfish(spawn_timer={self.spawn_timer}, "
-            f"first_cycle={self.first_cycle} children={self.children})"
-        )
-
-    @property
-    def descendants(self) -> int:
-        return (
-            len(self.children)
-            + sum(child.descendants for child in self.children)
-        )
+from typing import Counter
 
 
 def get_spawn_timers(path: str) -> tuple[int, ...]:
@@ -47,29 +10,20 @@ def get_spawn_timers(path: str) -> tuple[int, ...]:
 
 
 def _run(spawn_timers: tuple[int, ...], cycles: int) -> int:
-    lanternfish = [Lanternfish(spawn_timer) for spawn_timer in spawn_timers]
+    mapping: dict[int, int] = Counter(spawn_timers)
 
     for _ in range(0, cycles):
-        for fish in lanternfish:
-            fish.tick()
+        mapping = {
+            val - 1: count
+            for val, count in mapping.items()
+        }
 
-    return (
-        len(lanternfish)
-        + sum(fish.descendants for fish in lanternfish)
-    )
+        if mapping.get(-1) is not None:
+            mapping[6] = mapping.get(6, 0) + mapping[-1]
+            mapping[8] = mapping[-1]
+            del mapping[-1]
 
-
-def run1(spawn_timers: tuple[int, ...]) -> int:
-    lanternfish = [Lanternfish(spawn_timer) for spawn_timer in spawn_timers]
-
-    for _ in range(0, 80):
-        for fish in lanternfish:
-            fish.tick()
-
-    return (
-        len(lanternfish)
-        + sum(fish.descendants for fish in lanternfish)
-    )
+    return sum(val for val in mapping.values())
 
 
 def run(path: str) -> None:
@@ -80,4 +34,4 @@ def run(path: str) -> None:
 
 
 if __name__ == "__main__":
-    run("./data.txt")
+    run("./day6/data.txt")
