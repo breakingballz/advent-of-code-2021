@@ -23,7 +23,7 @@ def _run(spawn_timers: tuple[int, ...], cycles: int) -> int:
             mapping[8] = mapping[-1]
             del mapping[-1]
 
-    return sum(val for val in mapping.values())
+    return sum(mapping.values())
 
 
 def run(path: str) -> None:
@@ -34,4 +34,4 @@ def run(path: str) -> None:
 
 
 if __name__ == "__main__":
-    run("./day6/data.txt")
+    run("./data.txt")
