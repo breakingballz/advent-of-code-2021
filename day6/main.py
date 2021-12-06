@@ -3,22 +3,16 @@ from typing import Counter
 
 def get_spawn_timers(path: str) -> tuple[int, ...]:
     with open(path, "r") as file:
-        return tuple(
-            int(val)
-            for val in file.readline().split(",")
-        )
+        return tuple(int(val) for val in file.readline().split(","))
 
 
 def _run(spawn_timers: tuple[int, ...], cycles: int) -> int:
     mapping: dict[int, int] = Counter(spawn_timers)
 
     for _ in range(0, cycles):
-        mapping = {
-            val - 1: count
-            for val, count in mapping.items()
-        }
+        mapping = {val - 1: count for val, count in mapping.items()}
 
-        if mapping.get(-1) is not None:
+        if mapping.get(-1):
             mapping[6] = mapping.get(6, 0) + mapping[-1]
             mapping[8] = mapping[-1]
             del mapping[-1]
