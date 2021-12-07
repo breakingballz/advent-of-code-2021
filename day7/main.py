@@ -35,6 +35,5 @@ def run(path) -> None:
     print(f"Result 2: {run2(positions)}")
 
 
-
 if __name__ == '__main__':
     run("./data.txt")
