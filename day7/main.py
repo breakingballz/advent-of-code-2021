@@ -1,4 +1,5 @@
-from typing import Callable
+import statistics
+from functools import cache
 
 
 def process_file(path: str) -> tuple[int, ...]:
@@ -6,14 +7,23 @@ def process_file(path: str) -> tuple[int, ...]:
         return tuple(int(val) for val in file.readline().split(","))
 
 
-def _run(
-    positions: tuple[int, ...], fuel_func: Callable[[int], int] = lambda n: n
-) -> int:
+@cache
+def calc_fuel(num: int) -> int:
+    return int(num * (num + 1) / 2)
+
+
+def run1(positions: tuple[int, ...]) -> int:
+    target = round(statistics.median(positions))
+
+    return sum(abs(pos - target) for pos in positions)
+
+
+def run2(positions: tuple[int, ...]) -> int:
     min_pos = min(pos for pos in positions)
     max_pos = max(pos for pos in positions)
 
     return min(
-        sum(fuel_func(abs(pos - i)) for pos in positions)
+        sum(calc_fuel(abs(pos - i)) for pos in positions)
         for i in range(min_pos, max_pos + 1)
     )
 
@@ -21,8 +31,9 @@ def _run(
 def run(path) -> None:
     positions = process_file(path)
 
-    print(f"Result 1: {_run(positions)}")
-    print(f"Result 2: {_run(positions, lambda n: int(n * (n + 1) / 2))}")
+    print(f"Result 1: {run1(positions)}")
+    print(f"Result 2: {run2(positions)}")
+
 
 
 if __name__ == '__main__':
