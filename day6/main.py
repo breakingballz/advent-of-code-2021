@@ -1,4 +1,5 @@
 from typing import Counter
+import time
 
 
 def get_spawn_timers(path: str) -> tuple[int, ...]:
