@@ -34,4 +34,4 @@ def run(path) -> None:
 
 
 if __name__ == '__main__':
-    run("./goran.txt")
+    run("./data.txt")
