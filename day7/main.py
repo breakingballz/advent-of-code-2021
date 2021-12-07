@@ -1,4 +1,5 @@
 import statistics
+import math
 from functools import cache
 
 
@@ -19,12 +20,13 @@ def run1(positions: tuple[int, ...]) -> int:
 
 
 def run2(positions: tuple[int, ...]) -> int:
-    min_pos = min(pos for pos in positions)
-    max_pos = max(pos for pos in positions)
+    mean = statistics.mean(positions)
+    min_target = math.floor(mean)
+    max_target = math.ceil(mean)
 
     return min(
-        sum(calc_fuel(abs(pos - i)) for pos in positions)
-        for i in range(min_pos, max_pos + 1)
+        sum(calc_fuel(abs(pos - min_target)) for pos in positions),
+        sum(calc_fuel(abs(pos - max_target)) for pos in positions)
     )
 
 
@@ -36,4 +38,4 @@ def run(path) -> None:
 
 
 if __name__ == '__main__':
-    run("./data.txt")
+    run("./goran.txt")
