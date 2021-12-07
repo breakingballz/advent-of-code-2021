@@ -1,6 +1,5 @@
 import statistics
 import math
-from functools import cache
 
 
 def process_file(path: str) -> tuple[int, ...]:
@@ -8,7 +7,6 @@ def process_file(path: str) -> tuple[int, ...]:
         return tuple(int(val) for val in file.readline().split(","))
 
 
-@cache
 def calc_fuel(num: int) -> int:
     return int(num * (num + 1) / 2)
 
