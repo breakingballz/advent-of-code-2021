@@ -18,13 +18,11 @@ def run1(positions: tuple[int, ...]) -> int:
 
 
 def run2(positions: tuple[int, ...]) -> int:
-    mean = statistics.mean(positions)
-    min_target = math.floor(mean)
-    max_target = math.ceil(mean)
+    target = statistics.mean(positions)
 
     return min(
-        sum(calc_fuel(abs(pos - min_target)) for pos in positions),
-        sum(calc_fuel(abs(pos - max_target)) for pos in positions)
+        sum(calc_fuel(abs(pos - math.floor(target))) for pos in positions),
+        sum(calc_fuel(abs(pos - math.ceil(target))) for pos in positions)
     )
 
 
