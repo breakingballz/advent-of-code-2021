@@ -62,7 +62,7 @@ def get_completion(line: str) -> str:
 
     completion = mapping2[char]
 
-    return completion + get_completion(line + completion)
+    return completion + get_completion(line[0:-1])
 
 
 def run1(lines: list[str]) -> int:
