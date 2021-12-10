@@ -31,36 +31,34 @@ def analyze(line: str) -> tuple[str, Optional[int]]:
     return "INCOMPLETE", None
 
 
-def strip_completed(chars: list[str]) -> list[str]:
-    char = chars[0]
+def strip_completed(line: str) -> str:
+    char = line[-1]
     count = 0
 
-    for idx, next_char in enumerate(chars):
-        if next_char == char:
+    for i in range(len(line) - 1, -1, -1):
+        if line[i] == char:
             count += 1
             continue
 
-        if next_char == mapping1[char]:
+        if line[i] == mapping1[char]:
             count -= 1
 
             if count == 0:
-                return chars[idx + 1:]
+                return line[0:i]
+
+    return line
 
 
 def get_completion(line: str) -> str:
     if not line:
         return ""
 
-    chars: list[str] = [*line]
-    chars.reverse()
-    char = chars[0]
+    char = line[-1]
 
     if char in mapping1:
-        # Closing char.
-        chars = strip_completed(chars)
-        chars.reverse()
+        line = strip_completed(line)
 
-        return get_completion("".join(chars))
+        return get_completion(line)
 
     completion = mapping2[char]
 
