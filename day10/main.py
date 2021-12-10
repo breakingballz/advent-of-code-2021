@@ -100,12 +100,8 @@ def run2(lines: list[str]) -> int:
 def run(path: str) -> None:
     lines = process_file(path)
 
-    start = time.time()
     print(f"Result 1: {run1(lines)}")
-    print("", time.time() - start)
-    start = time.time()
     print(f"Result 2: {run2(lines)}")
-    print("", time.time() - start)
 
 
 if __name__ == '__main__':
